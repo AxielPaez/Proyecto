@@ -1,7 +1,6 @@
 package usersServer;
 
 import java.net.*;
-import java.util.regex.Pattern;
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.*;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -18,18 +17,14 @@ import java.security.*;
 
 public class UsersServer2 {
 
-	private static String URL;
+	private static String URL = "jdbc:mysql://localhost:3306/TED";
 	private static final String USER = "dba";
 	private static final String PASSWORD = "dba";
 
 	private static final int ID_LOGIN = 0;
 	private static final int ID_REGISTRO = 1;
 	
-	private static final String ipv4_regex ="^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
-
 	public static void main(String[] arstring){
-		
-		Pattern ipv4_pattern = Pattern.compile(ipv4_regex);
 
 		SSLContext ctx;
 		KeyManagerFactory kmf;
@@ -49,22 +44,6 @@ public class UsersServer2 {
 		System.out.println("|--------------------------------------------------------------|");
 		System.out.println("\n");
 		
-		String dirip="";
-		InputStreamReader Flujo = new InputStreamReader(System.in);
-		BufferedReader teclado = new BufferedReader(Flujo);
-		System.out.print("Introduzca la direccion IP en la que se encuentra la Base de Datos (sin especificar el puerto):\n");
-		try {
-			dirip = teclado.readLine();
-			while(!ipv4_pattern.matcher(dirip).matches()) {
-				System.out.println("Direccion IP incorrecta, introduzca una IP valida: ");
-				dirip = teclado.readLine();
-			}
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-		URL = "jdbc:mysql://"+dirip+":3306/TED";
-
 
 		while (true){
 
@@ -90,11 +69,11 @@ public class UsersServer2 {
 				ServerSocketFactory ssf = ServerSocketFactory.getDefault();
 				serverSocket = ssf.createServerSocket(SR_port);
 
-				System.out.println("TCP SERVER WAITING PORT "+SR_port);
+				System.out.println("Servidor escuchando en puerto: "+SR_port);
 
 				socket = serverSocket.accept();
 
-				System.out.println("PEER CLIENT: "+socket.getRemoteSocketAddress());
+				System.out.println("Cliente conectado desde: "+socket.getRemoteSocketAddress());
 
 				
 				SSLSocketFactory sslSf = ctx.getSocketFactory();
