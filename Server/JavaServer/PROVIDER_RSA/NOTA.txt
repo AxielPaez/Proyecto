@@ -1,0 +1,5 @@
+
+
+LA VERSION 1.46 DE NOUNCY CASTLE ES LA QUE UTILIZA ANDROID 
+
+hay que crearse los almacenes en esta version para que funcionen las aplicaciones con SSL en android
